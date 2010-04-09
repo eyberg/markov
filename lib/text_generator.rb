@@ -23,8 +23,6 @@ class TextGenerator
 
         if !nextword.nil? then
           @markov_chain.increment_probability(word, nextword)
-        else
-          #@markov_chain.decrement(word) #words[word][nextword] = 0
         end
 
       end

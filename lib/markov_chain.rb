@@ -43,11 +43,7 @@ class MarkovChain
 
   # return a 'random' word
   def get_word(word)
-    #debugger
-    if @words[word].nil? then
-      puts "bad word: #{word}"
-      word
-    else
+    if !@words[word].nil? then
       sel = rand(@words[word].size)
       @words[word].keys[sel]
     end
