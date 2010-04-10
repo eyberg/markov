@@ -28,10 +28,35 @@ class MarkovChain
 
   # return a 'random' word
   def get_word(word)
+    chosen = ""
+
     if !@graph.words[word].nil? then
-      sel = rand(@graph.words[word].size)
-      @graph.words[word].keys[sel]
+      
+      # sum up all values in our word to get range
+      total = 0
+      @graph.words[word].map { |k,v| total += v }
+
+      # grab some random val from said range
+      sel = rand(total)
+
+      # return the first word that has a
+      # weight greater than our 'random number'
+      # ensure we remove the weight from random
+      # on each iteration
+      @graph.words[word].each do |k,v|
+
+        if v > sel then
+          chosen = k
+          break
+        end
+
+        sel -= v
+
+      end
+
+      return chosen
     end
+
   end
 
   # return a random word
@@ -52,6 +77,12 @@ class MarkovChain
     retarr = [start]
    
     begin
+      
+      # we need at least 1 way out
+      if @graph.out_degree_of(word) <= 0 then
+        break
+      end
+
       word = get_word(word)
 
       if word.nil? then
@@ -60,7 +91,6 @@ class MarkovChain
       end
 
       retarr << word
-
 
       # if we hit the end of the sentence we need
       # to pick another word cause we don't keep
