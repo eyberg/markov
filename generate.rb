@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/lib/init'
-require 'rubygems'
-require 'graphviz'
+#require 'rubygems'
+#require 'graphviz'
 
 unless ARGV[0]
   usage =<<EOF
