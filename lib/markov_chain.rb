@@ -42,7 +42,7 @@ class MarkovChain
   end
 
   # return a 'random' array of words
-  def random_walk(start)
+  def random_walk(start = 'start')
 
     word = start
 

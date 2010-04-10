@@ -5,13 +5,12 @@ describe MarkovChain do
     @mc = MarkovChain.new
   end
 
-  # this spec seems to fail w/out build_graph ... not sure
-  # if this is intended behavior  
+  # changed spec to read as 'should_not'
+  # this probably should fail since a && b are not present..
   it "should create graph nodes with increment_probability" do
-    build_graph
     @mc.increment_probability("start","end")
-    @mc.graph.should satisfy { |g|  g.contains?("a")}
-    @mc.graph.should satisfy { |g|  g.contains?("b")}
+    @mc.graph.should_not satisfy { |g|  g.contains?("a")}
+    @mc.graph.should_not satisfy { |g|  g.contains?("b")}
     @mc.graph.edge_weight("start","end").should == 1
   end
 
@@ -38,14 +37,12 @@ describe MarkovChain do
     walk.first.should == "start"
   end
 
-  # modifying this spec as I'm not sure if it was a typo
-  # to have missing args for it....
   it "should choose node with 0 out-degree as end node" do
     build_graph
-    walk = @mc.random_walk("start")
+    walk = @mc.random_walk
     @mc.graph.out_degree_of(walk.last).should == 0
   end
-  
+
   it "should choose nodes in random_walk randomly by weight" do
     build_graph(:b => 3, :a => 0)
     walk = @mc.random_walk("start")

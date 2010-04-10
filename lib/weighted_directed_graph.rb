@@ -20,13 +20,14 @@ class WeightedDirectedGraph
   def edge_weight(a,b)
     @words[a][b] or Throw NoRelation
   end
-  
+ 
   def contains?(name)
+    !@words[name].nil?
   end
   
   def out_degree_of(name)
     if @words[name].nil? then
-      Throw NoNode
+      Throw NoSuchWord
     else
       @words[name].size
     end
