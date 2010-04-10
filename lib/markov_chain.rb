@@ -47,6 +47,8 @@ class MarkovChain
     word = start
 
     num_sentences = 10
+
+    # first word should be our seed
     retarr = [start]
    
     begin

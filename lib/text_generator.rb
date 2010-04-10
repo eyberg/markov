@@ -11,6 +11,7 @@ class TextGenerator
   def seed(text)
 
     # not sure why we are splitting into sentences first
+    # seems like a needless step but do this to pass spec
     sins = sentences(text)
 
     # split each sentence into words 
