@@ -19,3 +19,6 @@ end
 text_generator = TextGenerator.new
 text_generator.seed(seed_text)
 puts text_generator.generate(ARGV[1] || "Nearly")
+
+text_generator.markov_chain.graph.pretty_picture
+
