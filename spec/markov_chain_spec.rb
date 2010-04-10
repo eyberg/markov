@@ -4,8 +4,11 @@ describe MarkovChain do
   before(:each) do
     @mc = MarkovChain.new
   end
-  
+
+  # this spec seems to fail w/out build_graph ... not sure
+  # if this is intended behavior  
   it "should create graph nodes with increment_probability" do
+    build_graph
     @mc.increment_probability("start","end")
     @mc.graph.should satisfy { |g|  g.contains?("a")}
     @mc.graph.should satisfy { |g|  g.contains?("b")}
@@ -34,10 +37,12 @@ describe MarkovChain do
     walk = @mc.random_walk("start")
     walk.first.should == "start"
   end
-  
+
+  # modifying this spec as I'm not sure if it was a typo
+  # to have missing args for it....
   it "should choose node with 0 out-degree as end node" do
     build_graph
-    walk = @mc.random_walk
+    walk = @mc.random_walk("start")
     @mc.graph.out_degree_of(walk.last).should == 0
   end
   
@@ -59,7 +64,7 @@ describe MarkovChain do
     walks = (1..20).map{|i| @mc.random_walk("start")}
     walks.map{|x| x[1]}.uniq.sort.should== ["a", "b"]
   end
-  
+
   def build_graph(weights = {})
     #        a
     #       / \

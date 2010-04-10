@@ -6,53 +6,39 @@ class MarkovChain
 
   def initialize
     @graph = WeightedDirectedGraph.new
-
-    @words = {} # hash to hold our words
   end
 
   # improve the chance of b coming after a
   def increment_probability(a,b)
-    
+
     # are we tracking this yet?
-    if @words[a].nil? then
-      freq = {}
-      freq[b] = 1
-
-      @words[a] = freq
-    
-    else
-
-      # determine if b has been here before
-      if @words[a][b].nil? then
-        @words[a][b] = 1
-      else
-        @words[a][b] += 1
-      end
-
+    if @graph.words[a].nil? then
+      @graph.add_node(a)
     end
-
+    
+    @graph.connect(a, b, 1)
   end
 
   # ensure that our word is still available
   # in our hash
   def addword(word)
-    if @words[word].nil? then
-      @words[word] = {}
+    if @graph.words[word].nil? then
+      @graph.words[word] = {}
     end
   end
 
   # return a 'random' word
   def get_word(word)
-    if !@words[word].nil? then
-      sel = rand(@words[word].size)
-      @words[word].keys[sel]
+    if !@graph.words[word].nil? then
+      sel = rand(@graph.words[word].size)
+      @graph.words[word].keys[sel]
     end
   end
 
   # return a random word
   # we prob. hit punctuation
   def pick_another
-    return @words.keys[rand(@words.size)]
+    return @graph.words.keys[rand(@graph.words.size)]
   end
 
   # return a 'random' array of words
@@ -60,12 +46,17 @@ class MarkovChain
 
     word = start
 
-    num_sentences = 10
+    num_sentences = 1
     retarr = []
    
     begin
       word = get_word(word)
       retarr << word
+
+      if word.nil? then
+        num_sentences -= 1
+        break
+      end
 
       # if we hit the end of the sentence we need
       # to pick another word cause we don't keep
