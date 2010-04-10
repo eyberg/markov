@@ -2,7 +2,6 @@ require File.dirname(__FILE__) + '/weighted_directed_graph'
 
 class MarkovChain
   attr_accessor :graph
-  attr_accessor :words
 
   def initialize
     @graph = WeightedDirectedGraph.new
@@ -37,6 +36,7 @@ class MarkovChain
 
   # return a random word
   # we prob. hit punctuation
+  # only needed if you want more than 1 sentence
   def pick_another
     return @graph.words.keys[rand(@graph.words.size)]
   end
@@ -46,7 +46,7 @@ class MarkovChain
 
     word = start
 
-    num_sentences = 1
+    num_sentences = 10
     retarr = [start]
    
     begin
@@ -63,6 +63,7 @@ class MarkovChain
       # if we hit the end of the sentence we need
       # to pick another word cause we don't keep
       # track of next words to pass spec
+      # this is only for if you want more than 1 sentence
       if word.split('').last.match(/\.|\?|\!/) then
         word = pick_another
         num_sentences -= 1
