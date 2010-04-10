@@ -13,33 +13,6 @@ class WeightedDirectedGraph
     @words[name] = {}
   end
 
-  # output a graphviz pic of
-  # our graph
-  #
-  # don't do this ... the graph
-  # is really huge.. smaller
-  # graphs are fine, you'll
-  # need the ruby-graphviz
-  # gem though
-  def pretty_picture
-    g = nil
-    g = GraphViz::new( "G")
-
-    # add all the nodes
-    @words.each do |k,v|
-      blahnode = g.add_node(k)
-    end
-
-    # add all the edges
-    @words.each do |k,v|
-      v.each do |n,w|
-        g.add_edge(k, n)
-      end
-    end
-
-    g.output( :output => "svg", :file => "graph.svg" )
-  end
-
   # add weight/label to graph
   # if no relationship exists
   # create one
