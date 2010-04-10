@@ -14,7 +14,7 @@ describe MarkovChain do
     @mc.graph.should satisfy { |g|  g.contains?("b")}
     @mc.graph.edge_weight("start","end").should == 1
   end
-  
+
   it "should increment graph edge weight with increment_probability" do
     @mc.graph.add_node("start")
     @mc.graph.add_node("end")

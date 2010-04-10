@@ -47,16 +47,18 @@ class MarkovChain
     word = start
 
     num_sentences = 1
-    retarr = []
+    retarr = [start]
    
     begin
       word = get_word(word)
-      retarr << word
 
       if word.nil? then
         num_sentences -= 1
         break
       end
+
+      retarr << word
+
 
       # if we hit the end of the sentence we need
       # to pick another word cause we don't keep

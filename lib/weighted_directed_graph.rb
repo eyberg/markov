@@ -8,7 +8,7 @@ class WeightedDirectedGraph
   def add_node(name)
     @words[name] = {}
   end
-  
+
   def connect(a, b, weight=1)
     if @words[a][b].nil? then
       @words[a][b] = weight
